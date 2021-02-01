@@ -1,4 +1,9 @@
-<?php require_once('cropping_text.inc')?>
+<?php require_once('cropping_text.inc');
+
+$is_auth = rand(0, 1);
+
+$user_name = 'Леонид'; // укажите здесь ваше имя
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -64,7 +69,7 @@
                             </div>
                             <div class="header__profile-name">
                                 <span>
-                                    Леонид<!--здесь должно быть имя пользователя-->
+                                    <?= $user_name?><!--здесь должно быть имя пользователя-->
                                 </span>
                                 <svg class="header__link-arrow" width="10" height="6">
                                     <use xlink:href="#icon-arrow-right-ad"></use>
