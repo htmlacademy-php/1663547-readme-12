@@ -1,6 +1,10 @@
 <?php
 require ('helpers.php');
 
+$is_auth = rand(0, 1);
+
+$user_name = 'Леонид'; // укажите здесь ваше имя
+$title = 'Популярное';
 $posts= [
     [
         'name' => 'Лариса',
@@ -41,11 +45,11 @@ $posts= [
 ];
 
 // HTML-код главной страницы
-$page_content = include_template('main.php', ['content'=> $posts]);
+$page_content = include_template('main.php', ['content'=> $posts, 'title' => $title]);
 
 // окончательный HTML-код
 $layout_content = include_template('layout.php', ['content' => $page_content,
-                                                        'title' => 'Главная']);
+                                                        'user_name'=> $user_name]);
 
 print($layout_content);
 ?>

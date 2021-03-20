@@ -1,7 +1,7 @@
 
 <section class="page__main page__main--popular">
     <div class="container">
-        <h1 class="page__title page__title--popular">Популярное</h1>
+        <h1 class="page__title page__title--popular"><?= $title ?></h1>
     </div>
     <div class="popular container">
         <div class="popular__filters-wrapper">
@@ -88,7 +88,7 @@
         <div class="popular__posts">
 
 
-            <?php require_once('cropping_text.php');
+            <?php require_once('functions.php');
             foreach ($content as $elem) {?>
                 <article class="popular__post post <?=$elem['type']?>">
                     <header class="post__header">
