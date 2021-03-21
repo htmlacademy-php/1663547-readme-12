@@ -88,8 +88,8 @@
         <div class="popular__posts">
 
 
-            <?php require_once('functions.php');
-            foreach ($content as $elem) {?>
+
+            <?php foreach ($content as $elem) {?>
                 <article class="popular__post post <?=$elem['type']?>">
                     <header class="post__header">
 
