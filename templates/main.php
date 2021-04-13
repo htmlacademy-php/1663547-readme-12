@@ -1,4 +1,8 @@
-
+<?php
+/**
+ * @var string $title
+*/
+?>
 <section class="page__main page__main--popular">
     <div class="container">
         <h1 class="page__title page__title--popular"><?= $title ?></h1>
@@ -89,7 +93,7 @@
 
 
 
-            <?php foreach ($content as $elem) {?>
+            <?php foreach ($content as $key =>$elem) {?>
                 <article class="popular__post post <?=$elem['type']?>">
                     <header class="post__header">
 
@@ -153,10 +157,11 @@
                         <footer class="post__footer">
                             <div class="post__author">
                                 <a class="post__author-link" href="#" title="<?php
-                                //date_default_timezone_set('Europe/Moscow');
-                                //$date = date('d.m.Y H:i');
-                                //print($curdate);
-
+                                date_default_timezone_set('Europe/Moscow');
+                                $date = date('Y-m-d H:i:s');
+                                $randomDate = generate_random_date($key);
+                                $unixRandomDate = strtotime($randomDate);
+                                echo date('d.m.Y H:i:s',$unixRandomDate);
                                 ?>">
                                     <div class="post__avatar-wrapper">
                                         <!--укажите путь к файлу аватара-->
@@ -164,23 +169,11 @@
                                     </div>
                                     <div class="post__info">
                                         <b class="post__author-name"><?= $elem['name'];?><!--здесь имя пользоателя--></b>
-                                        <time class="post__time" datetime=""><?php
-                                            date_default_timezone_set('Europe/Moscow');
-                                            $current_date = date('d.m.Y H:i:s');
-                                            $par = strtotime($current_date);
-                                            $curdate = generate_random_date($current_date);
-                                            $pars = strtotime($curdate);
-                                            $deff = $par - $pars;
-                                            //$dateTame = date_format($deff);
-                                            //$days_count = date_interval_format($datePast);
-                                            //$datePast = date("d.m.Y H:i:s", $deff);
-                                            //$ram= get_noun_plural_form($deff);
-                                            echo get_time_ago($deff).' '.'назад ';
-                                            //echo $deff;
-                                            //print ($par);
-                                            //$date = date_create('1 month ago');
-                                            //var_dump($date);
-
+                                        <time class="post__time" datetime="">
+                                            <?php
+                                            $unixDate = strtotime($date);
+                                            $general = $unixDate - $unixRandomDate;
+                                            echo get_time_ago($general).' '.'назад ';
                                             ?></time>
                                     </div>
                                 </a>

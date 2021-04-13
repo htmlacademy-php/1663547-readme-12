@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<?php
+/**
+ * @var string $user_name
+ * @var string $content
+ */
+?>
 <html lang="ru">
 <head>
     <meta charset="utf-8">
