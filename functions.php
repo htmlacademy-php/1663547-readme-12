@@ -39,11 +39,11 @@ function cropText(string $text, int $number_char = 300)
  *
  * @param $timeStamp int Количество секунд
  *
- * @return 1 вернет количество лет
- * @return 2 вернет количество месяцев
- * @return 3 вернет количество недель
- * @return 4 вернет количество дней
- * @return 5 вернет количество минут
+ * @return string, вернет количество лет
+ * @return string, вернет количество месяцев
+ * @return string, вернет количество недель
+ * @return string, вернет количество дней
+ * @return string, вернет количество минут
  */
 function get_time_ago($timeStamp)
 {
@@ -75,8 +75,7 @@ function get_time_ago($timeStamp)
     }
     elseif ($timeStamp >= 60 * 60)
     {
-
-        $datePast = date("G", $timeStamp);
+        $datePast = $timeStamp/3600;
         return $datePast. ' ' .get_noun_plural_form($datePast, 'час', 'часа', 'часов');
     }
     elseif ($timeStamp >= 60 )

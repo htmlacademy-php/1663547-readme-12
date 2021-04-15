@@ -156,9 +156,8 @@
 
                         <footer class="post__footer">
                             <div class="post__author">
-                                <a class="post__author-link" href="#" title="<?php
-                                date_default_timezone_set('Europe/Moscow');
-                                $date = date('Y-m-d H:i:s');
+                                <a class="post__author-link" href="#" title="
+                                <?php
                                 $randomDate = generate_random_date($key);
                                 $unixRandomDate = strtotime($randomDate);
                                 echo date('d.m.Y H:i:s',$unixRandomDate);
@@ -171,9 +170,9 @@
                                         <b class="post__author-name"><?= $elem['name'];?><!--здесь имя пользоателя--></b>
                                         <time class="post__time" datetime="">
                                             <?php
-                                            $unixDate = strtotime($date);
-                                            $general = $unixDate - $unixRandomDate;
-                                            echo get_time_ago($general).' '.'назад ';
+                                            date_default_timezone_set('Europe/Moscow');
+                                            $general = time() - $unixRandomDate;
+                                            echo get_time_ago($general).' '.'назад';
                                             ?></time>
                                     </div>
                                 </a>
