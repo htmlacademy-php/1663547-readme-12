@@ -34,4 +34,55 @@ function cropText(string $text, int $number_char = 300)
     return "<p>" . $text . "</p>";
   }
 }
+/**
+ * Вычисление относительного формата
+ *
+ * @param $timeStamp int Количество секунд
+ *
+ * @return string, вернет количество лет
+ * @return string, вернет количество месяцев
+ * @return string, вернет количество недель
+ * @return string, вернет количество дней
+ * @return string, вернет количество минут
+ */
+function get_time_ago($timeStamp)
+{
+
+    if ($timeStamp >= 60 * 60 * 24 * 365)
+    {
+
+        $datePast = date("Y", $timeStamp);
+        return $datePast. ' ' .get_noun_plural_form($datePast, 'год', 'года', 'лет');
+
+    }
+    elseif ( $timeStamp >= 60 * 60 * 24 * 30)
+    {
+
+        $datePast = date("n", $timeStamp);
+        return $datePast. ' ' .get_noun_plural_form($datePast, 'месяц', 'месяца', 'месяцев');
+    }
+    elseif ($timeStamp >= 60 * 60 * 24 * 7)
+    {
+
+        $datePast = date("N", $timeStamp);
+        return $datePast. ' ' .get_noun_plural_form($datePast, 'неделя', 'недели', 'недель');
+    }
+    elseif ($timeStamp >= 60 * 60 * 24)
+    {
+
+        $datePast = date("j", $timeStamp);
+        return $datePast. ' ' .get_noun_plural_form($datePast, 'день', 'дня', 'дней');
+    }
+    elseif ($timeStamp >= 60 * 60)
+    {
+        $datePast = $timeStamp/3600;
+        return $datePast. ' ' .get_noun_plural_form($datePast, 'час', 'часа', 'часов');
+    }
+    elseif ($timeStamp >= 60 )
+    {
+
+        $datePast = $timeStamp/60;
+        return $datePast. ' ' .get_noun_plural_form($datePast, 'минута', 'минуты', 'минут');
+    }
+}
 ?>

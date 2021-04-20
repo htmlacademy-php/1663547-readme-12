@@ -1,4 +1,8 @@
-
+<?php
+/**
+ * @var string $title
+*/
+?>
 <section class="page__main page__main--popular">
     <div class="container">
         <h1 class="page__title page__title--popular"><?= $title ?></h1>
@@ -89,7 +93,7 @@
 
 
 
-            <?php foreach ($content as $elem) {?>
+            <?php foreach ($content as $key =>$elem) {?>
                 <article class="popular__post post <?=$elem['type']?>">
                     <header class="post__header">
 
@@ -152,14 +156,24 @@
 
                         <footer class="post__footer">
                             <div class="post__author">
-                                <a class="post__author-link" href="#" title="Автор">
+                                <a class="post__author-link" href="#" title="
+                                <?php
+                                $randomDate = generate_random_date($key);
+                                $unixRandomDate = strtotime($randomDate);
+                                echo date('d.m.Y H:i:s',$unixRandomDate);
+                                ?>">
                                     <div class="post__avatar-wrapper">
                                         <!--укажите путь к файлу аватара-->
                                         <img class="post__author-avatar" src="<?= $elem['avatar'];?>" alt="Аватар пользователя">
                                     </div>
                                     <div class="post__info">
                                         <b class="post__author-name"><?= $elem['name'];?><!--здесь имя пользоателя--></b>
-                                        <time class="post__time" datetime="">дата</time>
+                                        <time class="post__time" datetime="">
+                                            <?php
+                                            date_default_timezone_set('Europe/Moscow');
+                                            $general = time() - $unixRandomDate;
+                                            echo get_time_ago($general).' '.'назад';
+                                            ?></time>
                                     </div>
                                 </a>
                             </div>
