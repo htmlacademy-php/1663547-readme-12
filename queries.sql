@@ -42,17 +42,17 @@ SELECT * FROM post WHERE users_id = 1;
 INSERT INTO likes SET users_id = 1, post_id = 2;
 
 //получить список постов с сортировкой по популярности и вместе с именами авторов и типом контента
-SELECT p.id, heading,content,number_views, author_quote, name
+SELECT p.id, p.heading, p.content, p.number_views, p.author_quote, t.name
 FROM post p
 JOIN type_content t
-ON p.type_content_id=t.id
+ON p.type_content_id = t.id
 ORDER BY number_views DESC
 
 //получить список комментариев для одного поста, в комментариях должен быть логин пользователя
-SELECT c.id, content, email
+SELECT c.id, c.content, u.email
 FROM comment c
 JOIN users u
-ON c.users_id=u.id
+ON c.users_id = u.id
 WHERE post_id = 1
 
 //подписаться на пользователя
