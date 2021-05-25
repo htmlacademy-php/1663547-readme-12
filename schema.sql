@@ -9,7 +9,7 @@ CREATE TABLE users (
    email VARCHAR(128) NOT NULL UNIQUE,
    name CHAR(255) NOT NULL,
    password CHAR(64) NOT NULL,
-   avatar_path CHAR(255)
+   avatar_path CHAR(255) NOT NULL
 );
 -- Структура таблицы `hash`
 CREATE TABLE hash (
@@ -27,12 +27,12 @@ CREATE TABLE post (
     id INT AUTO_INCREMENT PRIMARY KEY,
     create_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     heading char(64) NOT NULL,
-    content text NOT NULL,
+    content text DEFAULT NULL,
     author_quote char(64) DEFAULT NULL,
     image char(255) DEFAULT NULL,
     video char(255) DEFAULT NULL,
     link char(255) DEFAULT NULL,
-    number_views int(11) NOT NULL,
+    number_views int(11) DEFAULT NULL,
     users_id int(11) NOT NULL,
     hash_id int(11) NOT NULL,
     type_content_id int(11) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE post (
 -- Структура таблицы `comment`
 CREATE TABLE comment (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    create_date datetime NOT NULL,
+    create_date datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
     content text NOT NULL,
     users_id int(11) NOT NULL,
     post_id int(11) NOT NULL,
