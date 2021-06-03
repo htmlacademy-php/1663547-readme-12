@@ -2,11 +2,47 @@
 require ('helpers.php');
 require_once('functions.php');
 
+$con = mysqli_connect("localhost", "root", "root","readme");
+mysqli_set_charset($con, "utf8");
+
+$sql_type = "SELECT class_name FROM type_content";
+
+// Выполняем запрос и получаем результат
+    $result_type = mysqli_query($con, $sql_type);
+
+    if ($result_type) {
+        // получаем все категории в виде двумерного массива
+        $type = mysqli_fetch_all($result_type, MYSQLI_ASSOC);
+    }
+    else {
+        // получить текст последней ошибки
+        $error = mysqli_error($con);
+        $content = include_template('error.php', ['error' => $error]);
+    }
+
+$sql_post = "SELECT p.id, p.heading, p.content, p.image, p.link, p.author_quote, p.number_views, u.avatar_path, u.name
+                 FROM post p
+                 JOIN users u
+                 ON p.users_id = u.id
+                 ORDER BY number_views DESC";
+
+    $result_post = mysqli_query($con, $sql_post);
+
+if ($result_post) {
+    // получаем все категории в виде двумерного массива
+    $posts = mysqli_fetch_all($result_post, MYSQLI_ASSOC);
+}
+else {
+    // получить текст последней ошибки
+    $error = mysqli_error($con);
+    $content = include_template('error.php', ['error' => $error]);
+}
+
 $is_auth = rand(0, 1);
 
 $user_name = 'Леонид'; // укажите здесь ваше имя
 $title = 'Популярное';
-$posts= [
+/*$posts= [
     [
         'name' => 'Лариса',
         'avatar' => 'img/userpic-larisa-small.jpg',
@@ -44,7 +80,7 @@ $posts= [
         'type' => 'post-link'
     ]
 ];
-
+*/
 // HTML-код главной страницы
 $page_content = include_template('main.php', ['content'=> $posts, 'title' => $title]);
 
