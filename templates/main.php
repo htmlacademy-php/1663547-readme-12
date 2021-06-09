@@ -38,78 +38,78 @@
                     </li>
                 </ul>
             </div>
-            <?php foreach ($type as $type_content){ ?>
+
             <div class="popular__filters filters">
-                <b class="popular__filters-caption filters__caption">Тип контента:<?=$type_content['name'];?></b>
+                <b class="popular__filters-caption filters__caption">Тип контента:</b>
                 <ul class="popular__filters-list filters__list">
                     <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
                         <a class="filters__button filters__button--ellipse filters__button--all filters__button--active" href="#">
                             <span>Все</span>
                         </a>
                     </li>
-                    <?php foreach ($post as $posts){ ?>
-                    <?php switch ($type_content['class_name']){
+                    <?php foreach ($types as $type_content){
+                    switch ($type_content['class_name']){
                     case 'photo':?>
                     <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--photo button" href="#">
-                            <span class="visually-hidden">Фото<?=$posts['photo'];?></span>
+                        <a class="filters__button filters__button--photo<?php $type_content['class_name'];?> button" href="#">
+                            <span class="visually-hidden">Фото<?php $type_content['name']?></span>
                             <svg class="filters__icon" width="22" height="18">
-                                <use xlink:href="#icon-filter-photo"></use>
+                                <use xlink:href="#icon-filter-photo<?php $type_content['class_name'];?>"></use>
                             </svg>
                         </a>
                     </li>
-                    <?php break;?>
-                    <?php case 'video':?>
+                    <?php break;
+                            case 'video':?>
                     <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--video button" href="#">
-                            <span class="visually-hidden">Видео<?=$posts['video'];?></span>
+                        <a class="filters__button filters__button--video<?php $type_content['class_name'];?> button" href="#">
+                            <span class="visually-hidden">Видео<?php $type_content['name']?></span>
                             <svg class="filters__icon" width="24" height="16">
-                                <use xlink:href="#icon-filter-video"></use>
+                                <use xlink:href="#icon-filter-video<?php $type_content['class_name'];?>"></use>
                             </svg>
                         </a>
                     </li>
-                    <?php break;?>
-                    <?php case 'text':?>
+                    <?php break;
+                    case 'text':?>
                     <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--text button" href="#">
-                            <span class="visually-hidden">Текст<?=$posts['text'];?></span>
+                        <a class="filters__button filters__button--text<?php $type_content['class_name']?> button" href="#">
+                            <span class="visually-hidden"><?php $type_content['name']?></span>
                             <svg class="filters__icon" width="20" height="21">
-                                <use xlink:href="#icon-filter-text"></use>
+                                <use xlink:href="#icon-filter-text<?php $type_content['class_name']?>"></use>
                             </svg>
                         </a>
                     </li>
-                    <?php break;?>
-                    <?php case 'quote':?>
+                    <?php break;
+                    case 'quote':?>
                     <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--quote button" href="#">
-                            <span class="visually-hidden">Цитата<?=$posts['quote'];?></span>
+                        <a class="filters__button filters__button--quote<?php $type_content['class_name']?> button" href="#">
+                            <span class="visually-hidden"><?php $type_content['name']?></span>
                             <svg class="filters__icon" width="21" height="20">
-                                <use xlink:href="#icon-filter-quote"></use>
+                                <use xlink:href="#icon-filter-quote<?php $type_content['class_name']?>"></use>
                             </svg>
                         </a>
                     </li>
-                    <?php break;?>
-                    <?php case 'link':?>
+                    <?php break;
+                    case 'link':?>
                     <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--link button" href="#">
-                            <span class="visually-hidden">Ссылка<?=$posts['link'];?></span>
+                        <a class="filters__button filters__button--link<?php $type_content['class_name']?> button" href="#">
+                            <span class="visually-hidden"><?php $type_content['name']?></span>
                             <svg class="filters__icon" width="21" height="18">
-                                <use xlink:href="#icon-filter-link"></use>
+                                <use xlink:href="#icon-filter-link<?php $type_content['class_name']?>"></use>
                             </svg>
                         </a>
                     </li>
-                </ul><?php break;
-                default:
-                    break;
-                }
-                    }?>
+                </ul>
             </div>
-            <?php } ?>
+            <?php break;
+            default:
+                break;
+                    }
+            }?>
         </div>
         <div class="popular__posts">
 
-            <?php foreach ($content as $key =>$elem) {?>
-                <article class="popular__post post <?=$elem['type']?>">
+            <?php foreach ($posts as $key =>$elem) {?>
+                <article class="popular__post post <?=$elem['class_name']?>">
                     <header class="post__header">
 
                         <h2><a href="#"><?php echo $elem['heading'];?><!--здесь заголовок--></a></h2>
@@ -117,8 +117,8 @@
                     <div class="post__main">
                         <!--содержимое для поста-цитаты-->
                         <?php
-                        switch ($elem['type']){
-                            case 'post-quote':
+                        switch ($elem['class_name']){
+                            case 'quote':
                                 ?>
                                 <blockquote>
                                     <p>
@@ -127,10 +127,11 @@
                                     <cite>Неизвестный Автор</cite>
                                 </blockquote>
                                 <?php break;?>
-                            <?php case'post-text':?>
-
+                            <?php case'text':?>
+                        <blockquote>
                             <p>
-                                <?php $long_text = $elem['content'];
+                                <?php
+                                $long_text = $elem['content'];
                                 $short_text = cropText($long_text, 270);
                                 echo $short_text
                                 ?>
@@ -138,19 +139,19 @@
                                 <!--здесь текст-->
 
                             </p>
-
+                        </blockquote>
                             <?php break;?>
 
-                        <?php case'post-photo': ?>
+                        <?php case'photo': ?>
                             <div class="post-photo__image-wrapper">
-                                <img src="<?= $elem['content'];?>" alt="Фото от пользователя" width="360" height="240">
+                                <img src="<?= $elem['image'];?>" alt="Фото от пользователя" width="360" height="240">
                             </div>
 
                             <?php break;?>
-                        <?php case'post-link':?>
+                        <?php case'link':?>
 
                             <div class="post-link__wrapper">
-                                <a class="post-link__external" href="<?=$elem['content']?>" title="Перейти по ссылке">
+                                <a class="post-link__external" href="<?=$elem['link']?>" title="Перейти по ссылке">
                                     <div class="post-link__info-wrapper">
                                         <div class="post-link__icon-wrapper">
                                             <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
@@ -160,7 +161,7 @@
                                             <h3><?= $elem['heading'];?><!--здесь заголовок--></h3>
                                         </div>
                                     </div>
-                                    <span><?= $elem['content'];?><!--здесь ссылка--></span>
+                                    <span><?= $elem['link'];?><!--здесь ссылка--></span>
                                 </a>
                             </div>
                             <?php break;
@@ -179,7 +180,7 @@
                                 ?>">
                                     <div class="post__avatar-wrapper">
                                         <!--укажите путь к файлу аватара-->
-                                        <img class="post__author-avatar" src="<?= $elem['avatar'];?>" alt="Аватар пользователя">
+                                        <img class="post__author-avatar" src="<?= $elem['avatar_path'];?>" alt="Аватар пользователя">
                                     </div>
                                     <div class="post__info">
                                         <b class="post__author-name"><?= $elem['name'];?><!--здесь имя пользоателя--></b>
