@@ -40,7 +40,7 @@
             </div>
             <div class="popular__filters filters">
                 <b class="popular__filters-caption filters__caption">Тип контента:</b>
-                <ul class="popular__filters-list filters__list">
+                <ul class="popular__filters-list filters__list filters__button--active">
                     <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
                         <a class="filters__button filters__button--ellipse filters__button--all filters__button--active" href="#">
                             <span>Все</span>
@@ -96,7 +96,7 @@
             <?php foreach ($posts as $key =>$elem) {?>
                 <article class="popular__post post post-<?= $elem['class_name'] ?>">
                     <header class="post__header">
-                        <h2><a href="#"><?= $elem['heading'] ?></a></h2>
+                        <h2><a href="post.php?post_id=<?= $elem['id'] ?>"></a></h2>
                     </header>
                     <div class="post__main">
                         <?php
