@@ -1,15 +1,12 @@
 <!DOCTYPE html>
 <main class="page__main page__main--publication">
     <div class="container">
-        <h1 class="page__title page__title--publication"><?= $title ?></h1>
+        <h1 class="page__title page__title--publication"><?= $post['heading'] ?></h1>
         <section class="post-details">
             <h2 class="visually-hidden">Публикация</h2>
             <div class="post-details__wrapper post-photo">
                 <div class="post-details__main-block post post--details">
                     <?= $content?>
-                    <div class="post-details__image-wrapper post-photo__image-wrapper">
-                        <img src="img/rock-default.jpg" alt="Фото от пользователя" width="760" height="507">
-                    </div>
                     <div class="post__indicators">
                         <div class="post__buttons">
                             <a class="post__indicator post__indicator--likes button" href="#" title="Лайк">
@@ -113,12 +110,12 @@
                     <div class="post-details__user-info user__info">
                         <div class="post-details__avatar user__avatar">
                             <a class="post-details__avatar-link user__avatar-link" href="#">
-                                <img class="post-details__picture user__picture" src="img/<?= $active_post_avatar_path ?>" alt="Аватар пользователя">
+                                <img class="post-details__picture user__picture" src="<?= $post['avatar_path'] ?>" alt="Аватар пользователя">
                             </a>
                         </div>
                         <div class="post-details__name-wrapper user__name-wrapper">
                             <a class="post-details__name user__name" href="#">
-                                <span><?= $active_post_user_emeil ?></span>
+                                <span><?= $post['name'] ?></span>
                             </a>
                             <time class="post-details__time user__time" datetime="2014-03-20">5 лет на сайте</time>
                         </div>
@@ -142,62 +139,6 @@
         </section>
     </div>
 </main>
-
-<footer class="footer">
-    <div class="footer__wrapper">
-        <div class="footer__container container">
-            <div class="footer__site-info">
-                <div class="footer__site-nav">
-                    <ul class="footer__info-pages">
-                        <li class="footer__info-page">
-                            <a class="footer__page-link" href="#">О проекте</a>
-                        </li>
-                        <li class="footer__info-page">
-                            <a class="footer__page-link" href="#">Реклама</a>
-                        </li>
-                        <li class="footer__info-page">
-                            <a class="footer__page-link" href="#">О разработчиках</a>
-                        </li>
-                        <li class="footer__info-page">
-                            <a class="footer__page-link" href="#">Работа в Readme</a>
-                        </li>
-                        <li class="footer__info-page">
-                            <a class="footer__page-link" href="#">Соглашение пользователя</a>
-                        </li>
-                        <li class="footer__info-page">
-                            <a class="footer__page-link" href="#">Политика конфиденциальности</a>
-                        </li>
-                    </ul>
-                </div>
-                <p class="footer__license">
-                    При использовании любых материалов с сайта обязательно указание Readme в качестве источника. Все авторские и исключительные права в рамках проекта защищены в соответствии с положениями 4 части Гражданского Кодекса Российской Федерации.
-                </p>
-            </div>
-            <div class="footer__my-info">
-                <ul class="footer__my-pages">
-                    <li class="footer__my-page footer__my-page--feed">
-                        <a class="footer__page-link" href="feed.html">Моя лента</a>
-                    </li>
-                    <li class="footer__my-page footer__my-page--popular">
-                        <a class="footer__page-link" href="popular.html">Популярный контент</a>
-                    </li>
-                    <li class="footer__my-page footer__my-page--messages">
-                        <a class="footer__page-link" href="messages.html">Личные сообщения</a>
-                    </li>
-                </ul>
-                <div class="footer__copyright">
-                    <a class="footer__copyright-link" href="https://htmlacademy.ru">
-                        <span>Разработано HTML Academy</span>
-                        <svg class="footer__copyright-logo" width="27" height="34">
-                            <use xlink:href="#icon-htmlacademy"></use>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-
 <script src="js/main.js"></script>
 </body>
 </html>

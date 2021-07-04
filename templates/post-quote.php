@@ -3,9 +3,9 @@
     <div class="post__main">
         <blockquote>
             <p>
-                <?= $content ?>
+                <?= $content['content'] ?>
             </p>
-            <cite><?= $post_source_link ?></cite>
+            <cite><?= $content['link'] ?></cite>
         </blockquote>
     </div>
 </div>

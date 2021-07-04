@@ -96,7 +96,7 @@
             <?php foreach ($posts as $key =>$elem) {?>
                 <article class="popular__post post post-<?= $elem['class_name'] ?>">
                     <header class="post__header">
-                        <h2><a href="post.php?post_id=<?= $elem['id'] ?>"></a></h2>
+                        <h2><a href="post.php?post_id=<?= $elem['id']?>"><?=$elem['heading']?></a></h2>
                     </header>
                     <div class="post__main">
                         <?php
