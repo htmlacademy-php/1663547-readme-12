@@ -29,7 +29,7 @@ function cropText(string $text, int $number_char = 300)
   $text = implode(" ", $short_text);
 
   if ($reduction != false) {
-    return "<p>" . $text . "..." . "</p>" . '<a class="post-text__more-link" "href="#">Читать далее</a>';
+    return "<p>" . $text . "..." . "</p>" . '<a class="post-text__more-link" href="post.php?post_id=2">Читать далее</a>';
   } else {
     return "<p>" . $text . "</p>";
   }
@@ -47,29 +47,23 @@ function cropText(string $text, int $number_char = 300)
  */
 function get_time_ago($timeStamp)
 {
-
     if ($timeStamp >= 60 * 60 * 24 * 365)
     {
-
         $datePast = date("Y", $timeStamp);
         return $datePast. ' ' .get_noun_plural_form($datePast, 'год', 'года', 'лет');
-
     }
     elseif ( $timeStamp >= 60 * 60 * 24 * 30)
     {
-
         $datePast = date("n", $timeStamp);
         return $datePast. ' ' .get_noun_plural_form($datePast, 'месяц', 'месяца', 'месяцев');
     }
     elseif ($timeStamp >= 60 * 60 * 24 * 7)
     {
-
         $datePast = date("N", $timeStamp);
         return $datePast. ' ' .get_noun_plural_form($datePast, 'неделя', 'недели', 'недель');
     }
     elseif ($timeStamp >= 60 * 60 * 24)
     {
-
         $datePast = date("j", $timeStamp);
         return $datePast. ' ' .get_noun_plural_form($datePast, 'день', 'дня', 'дней');
     }
@@ -80,7 +74,6 @@ function get_time_ago($timeStamp)
     }
     elseif ($timeStamp >= 60 )
     {
-
         $datePast = $timeStamp/60;
         return $datePast. ' ' .get_noun_plural_form($datePast, 'минута', 'минуты', 'минут');
     }

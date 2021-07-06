@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<?php
+/**
+ * @var array $post
+ */
+?>
 <main class="page__main page__main--publication">
     <div class="container">
         <h1 class="page__title page__title--publication"><?= $post['heading'] ?></h1>
@@ -140,5 +145,3 @@
     </div>
 </main>
 <script src="js/main.js"></script>
-</body>
-</html>

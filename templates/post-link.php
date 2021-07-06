@@ -1,4 +1,9 @@
 <!-- пост-ссылка -->
+<?php
+/**
+ * @var array $content
+ */
+?>
 <div class="post__main">
     <div class="post-link__wrapper">
         <a class="post-link__external" href="<?= $content['link']?>" title="Перейти по ссылке">
@@ -8,7 +13,6 @@
                 </div>
                 <div class="post-link__info">
                     <h3><?= $content['heading'] ?></h3>
-                    <br><span><?= $content['link'] ?></span></br>
                 </div>
             </div>
         </a>

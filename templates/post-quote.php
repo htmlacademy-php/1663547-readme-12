@@ -1,4 +1,9 @@
 <!-- пост-цитата -->
+<?php
+/**
+ * @var array $content
+ */
+?>
 <div class="post-details__image-wrapper post-quote">
     <div class="post__main">
         <blockquote>
