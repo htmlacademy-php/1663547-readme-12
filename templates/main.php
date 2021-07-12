@@ -40,9 +40,9 @@
             </div>
             <div class="popular__filters filters">
                 <b class="popular__filters-caption filters__caption">Тип контента:</b>
-                <ul class="popular__filters-list filters__list">
-                    <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
-                        <a class="filters__button filters__button--ellipse filters__button--all filters__button--active" href="#">
+                <ul class="popular__filters-list  filters__list ">
+                    <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all ">
+                        <a class="filters__button filters__button--ellipse filters__button--all filters__button--active" href="index.php">
                             <span>Все</span>
                         </a>
                     </li>
@@ -81,7 +81,8 @@
                                 break;
                         } ?>
                         <li class="popular__filters-item filters__item">
-                            <a class="filters__button filters__button--<?= $type_content['class_name'] ?> button" href="#">
+                            <a class="filters__button filters__button--<?= $type_content['class_name'] ?> <?= $type_content['id'] == $type_content_id ? "filters__button--active ":""?>button"
+                               href="index.php?type-content=<?= $type_content['id']?>">
                                 <span class="visually-hidden"><?= $type_content['name'] ?></span>
                                 <svg class="filters__icon" width="<?= $size['width'] ?>" height="<?= $size['height'] ?>">
                                     <use xlink:href="#icon-filter-<?= $type_content['class_name'] ?>"></use>
@@ -96,7 +97,7 @@
             <?php foreach ($posts as $key =>$elem) {?>
                 <article class="popular__post post post-<?= $elem['class_name'] ?>">
                     <header class="post__header">
-                        <h2><a href="#"><?= $elem['heading'] ?></a></h2>
+                        <h2><a href="post.php?post_id=<?= $elem['id']?>"><?=$elem['heading']?></a></h2>
                     </header>
                     <div class="post__main">
                         <?php
@@ -115,13 +116,13 @@
                                 $long_text = $elem['content'];
                                 $short_text = cropText($long_text, 270);
                                 echo $short_text;?>
-                            <?php break;?>
-                        <?php case'photo': ?>
+                                <?php break;?>
+                            <?php case'photo': ?>
                             <div class="post-photo__image-wrapper">
                                 <img src="<?= $elem['image']?>" alt="Фото от пользователя" width="360" height="240">
                             </div>
-                            <?php break;?>
-                        <?php case'link':?>
+                                <?php break;?>
+                            <?php case'link':?>
                             <div class="post-link__wrapper">
                                 <a class="post-link__external" href="<?= $elem['link'] ?>" title="Перейти по ссылке">
                                     <div class="post-link__info-wrapper">
@@ -135,7 +136,7 @@
                                     <span><?= $elem['link'] ?></span>
                                 </a>
                             </div>
-                            <?php break;
+                                <?php break;
                             default:
                                 break;
                         }
