@@ -5,20 +5,24 @@ require_once('connection.php');
 $is_auth = rand(0, 1);
 $user_name = 'Леонид';
 $title = 'Популярное';
+$add_form = false;
+
 $id = filter_input(INPUT_GET, 'post_id', FILTER_VALIDATE_INT);
-    $sql = 'SELECT p.id, p.heading, p.content, p.image, p.link, u.name, u.avatar_path, t.class_name
-        FROM post p
-        JOIN users u ON p.users_id = u.id
-        JOIN type_content t ON p.type_content_id = t.id';
-    if ($id){
+$sql = 'SELECT p.id, p.heading, p.content, p.image, p.link, u.name, u.avatar_path, t.class_name
+    FROM post p
+    JOIN users u ON p.users_id = u.id
+    JOIN type_content t ON p.type_content_id = t.id';
+
+if ($id) {
         $sql .= ' WHERE p.id = '. $id;
         $result = mysqli_query($con, $sql);
         $active_post = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    }
-    if(!$active_post){
+}
+    if (!$active_post) {
         http_response_code(404);
         exit();
     }
+
 $post_content = include_template("post-". $active_post['class_name'] . ".php", ['content' => $active_post]);
 $page_content = include_template('one-post.php',
     [
@@ -30,6 +34,7 @@ $layout_content = include_template('layout.php',
     'content' => $page_content,
     'title' => $title,
     'user_name' => $user_name,
-    'is_auth' => $is_auth
+    'is_auth' => $is_auth,
+        'add_form' => $add_form
     ]);
 print($layout_content);

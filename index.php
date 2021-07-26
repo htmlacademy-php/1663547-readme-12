@@ -9,6 +9,8 @@ require_once('connection.php');
 $is_auth = rand(0, 1);
 $user_name = 'Леонид';
 $title = 'Популярное';
+$add_form = false;
+
 $type_content_id = filter_input(INPUT_GET,'type-content',FILTER_VALIDATE_INT);
     if ($result_type = mysqli_query($con, 'SELECT * FROM type_content')){
         $types = mysqli_fetch_all($result_type, MYSQLI_ASSOC);
@@ -19,9 +21,9 @@ $type_content_id = filter_input(INPUT_GET,'type-content',FILTER_VALIDATE_INT);
             ON p.users_id = u.id
             JOIN type_content t
             ON p.type_content_id = t.id';
-                if ($type_content_id) {
-                    $sql_post .= ' WHERE p.type_content_id ='. $type_content_id;
-            }
+        if ($type_content_id) {
+            $sql_post .= ' WHERE p.type_content_id ='. $type_content_id;
+        }
         $sql_post .= ' ORDER BY number_views DESC';
         $result_post = mysqli_query($con, $sql_post);
         $posts = mysqli_fetch_all($result_post, MYSQLI_ASSOC);
@@ -36,5 +38,6 @@ $type_content_id = filter_input(INPUT_GET,'type-content',FILTER_VALIDATE_INT);
         $error = mysqli_error($con);
         $page_content = include_template('error.php', ['error' => $error]);
     }
-$layout_content = include_template('layout.php', ['content' => $page_content, 'user_name'=> $user_name]);
+$layout_content = include_template('layout.php', ['content' => $page_content, 'user_name'=> $user_name,
+    'add_form' => $add_form]);
 print($layout_content);

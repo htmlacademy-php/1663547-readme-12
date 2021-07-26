@@ -94,6 +94,7 @@
             </div>
         </div>
         <div class="popular__posts">
+            
             <?php foreach ($posts as $key =>$elem) {?>
                 <article class="popular__post post post-<?= $elem['class_name'] ?>">
                     <header class="post__header">
