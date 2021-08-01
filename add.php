@@ -24,9 +24,9 @@ if (isset($_GET['id'])) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $post = $_POST;
 
-        $required_fields = ['title', 'text', 'author', 'link', 'video_url'];
+        $required_fields = ['heading', 'text', 'author', 'link', 'video_url'];
         $rules = [
-            'title' => function ($value) {
+            'heading' => function ($value) {
                 return validateFilled($value, 'Заголовок');
             },
             'text' => function ($value) {
@@ -52,7 +52,7 @@ if (isset($_GET['id'])) {
             }
         }
 
-        if ($id === '2') {
+        if ($id === '3') {
             if (!empty($_FILES['photo']['name'])) {
                 $tmp_name = $_FILES['photo']['tmp_name'];
                 $img_name = $_FILES['photo']['name'];
@@ -70,10 +70,13 @@ if (isset($_GET['id'])) {
                 $file_type = getFileType($_POST['url']);
                 $file = file_get_contents($_POST['url']);
                 if ($file) {
-                    if (!validateFileType($file_type)) {
+                    $valid_type = validateFileType($file_type, $avalable_file_types);
+                    if (!$valid_type) {
                         $img_name = pathinfo($_POST['url'], PATHINFO_BASENAME);
                         file_put_contents('uploads/' . $img_name, $file);
-                        $post['image'] = $img_name;
+                        $post['img'] = $img_name;
+                    } else {
+                        $errors['file'] = $valid_type;
                     }
                 }
             }
@@ -95,11 +98,14 @@ if (isset($_GET['id'])) {
                 $post['quote'] = null;
             }
             $post = array_filter($post);
-
-            $post = fillArray($post, ['heading', 'content', 'author_quote', 'image', 'link']);
+var_dump ($post);
+            $post = fillArray($post, ['heading', 'content', 'author_quote', 'image', 'link', 'users_id', 'type_content_id']);
+            $post['users_id'] = $users_id;
+            $post['type_contnet_id'] = $id;
 
             $sql = 'INSERT INTO post (heading, content, author_quote, image, video, link, users_id, type_content_id)
-                VALUES (?, ?, ?, ?, ?, ?, $users_id, $id)';
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+
             $stmt = db_get_prepare_stmt($con, $sql, $post);
 
             $result = mysqli_stmt_execute($stmt);
