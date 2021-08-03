@@ -9,12 +9,12 @@
                     <ul class="adding-post__tabs-list filters__list tabs__list">
                         <?php foreach ($post_types as $type): ?>
                             <li class="adding-post__tabs-item filters__item">
-                                <a class="adding-post__tabs-link filters__button filters__button--<?=$type['class_name']; ?>
-                    <?php if ($type['id'] === $id): ?> filters__button--active <?php endif; ?> tabs__item tabs__item--active button" href="add.php?<?=http_build_query([ 'id' => $type['id'] ]); ?>">
+                                <a class="adding-post__tabs-link filters__button filters__button--<?= $type['class_name'] ?>
+                    <?php if ($type['id'] === $id): ?> filters__button--active <?php endif; ?> tabs__item tabs__item--active button" href="add.php?<?= http_build_query([ 'id' => $type['id'] ]) ?>">
                                     <svg class="filters__icon" width="22" height="18">
-                                        <use xlink:href="#icon-filter-<?=$type['class_name']; ?>"></use>
+                                        <use xlink:href="#icon-filter-<?= $type['class_name'] ?>"></use>
                                     </svg>
-                                    <span><?=$type['name']; ?></span>
+                                    <span><?= $type['name'] ?></span>
                                 </a>
                             </li>
                         <?php endforeach; ?>
@@ -23,7 +23,7 @@
                 <div class="adding-post__tab-content">
                     <section class="adding-post__<?=$post_types[$id - 1]['class_name']; ?> tabs__content tabs__content--active">
                         <h2 class="visually-hidden">Форма добавления</h2>
-                        <form class="adding-post__form form" action="add.php?<?=http_build_query([ 'id' => $id ]); ?>" method="post" enctype="multipart/form-data">
+                        <form class="adding-post__form form" action="add.php?<?= http_build_query([ 'id' => $id ]) ?>" method="post" enctype="multipart/form-data">
                             <div class="form__text-inputs-wrapper">
                                 <div class="form__text-inputs">
                                     <div class="adding-post__input-wrapper form__input-wrapper <?php if(array_key_exists("heading", $errors)): ?> form__input-section--error <?php endif; ?>">
@@ -37,15 +37,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <?=$content; ?>
+                                    <?= $content ?>
                                     <div class="adding-post__input-wrapper form__input-wrapper <?php if(array_key_exists("tags", $errors)): ?> form__input-section--error <?php endif; ?>">
                                         <label class="adding-post__label form__label" for="tags">Теги</label>
                                         <div class="form__input-section">
-                                            <input class="adding-post__input form__input" id="tags" type="text" name="tags" value="<?=getPostVal('tags'); ?>" placeholder="Введите теги">
+                                            <input class="adding-post__input form__input" id="tags" type="text" name="tags" value="<?= getPostVal('tags') ?>" placeholder="Введите теги">
                                             <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
                                             <div class="form__error-text">
                                                 <h3 class="form__error-title">Ошибка!</h3>
-                                                <p class="form__error-desc"><?=$errors['tags']; ?></p>
+                                                <p class="form__error-desc"><?= $errors['tags'] ?></p>
                                             </div>
                                         </div>
                                     </div>
@@ -56,7 +56,7 @@
                                         <b class="form__invalid-slogan">Пожалуйста, исправьте следующие ошибки:</b>
                                         <?php foreach ($errors as $key => $value): ?>
                                             <ul class="form__invalid-list">
-                                                <li class="form__invalid-item"><?=$value; ?></li>
+                                                <li class="form__invalid-item"><?= $value ?></li>
                                             </ul>
                                         <?php endforeach; ?>
                                     </div>

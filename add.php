@@ -7,6 +7,7 @@ $is_auth = 1;
 $user_name = 'Леонид';
 $add_form = true;
 $users_id = 4;
+$hash_id = 4;
 
 $id = '1';
 $post_types = [];
@@ -16,15 +17,12 @@ $post = [];
 $post_types = make_select_query($con, 'SELECT * FROM type_content');
 
 if (isset($_GET['id'])) {
-    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-} else {
-    $id = '1';
-}
+    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);}
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $post = $_POST;
+        $required_fields = ['heading', 'text', 'author', 'link', 'video_url', 'tags'];
 
-        $required_fields = ['heading', 'text', 'author', 'link', 'video_url'];
         $rules = [
             'heading' => function ($value) {
                 return validateFilled($value, 'Заголовок');
@@ -43,12 +41,16 @@ if (isset($_GET['id'])) {
             },
             'video_url' => function ($value) {
                 return validateUrl($value, 'Ссылка Youtube', true);
+            },
+            'tags' => function ($value) {
+                return validateFilled($value, 'Теги');
             }
         ];
-        foreach ($_POST as $key => $value) {
+
+        foreach ($post as $key => $value) {
             if (isset($rules[$key])) {
                 $rule = $rules[$key];
-                $errors[$key] = $rule($key);
+                $errors[$key] = $rule($value);
             }
         }
 
@@ -98,13 +100,15 @@ if (isset($_GET['id'])) {
                 $post['quote'] = null;
             }
             $post = array_filter($post);
-var_dump ($post);
-            $post = fillArray($post, ['heading', 'content', 'author_quote', 'image', 'link', 'users_id', 'type_content_id']);
+
+            $post = fillArray($post, ['heading', 'content', 'author_quote', 'image', 'video', 'link']);
+            $post['hash_id'] = $hash_id;
             $post['users_id'] = $users_id;
             $post['type_contnet_id'] = $id;
 
-            $sql = 'INSERT INTO post (heading, content, author_quote, image, video, link, users_id, type_content_id)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+
+            $sql = 'INSERT INTO post (heading, content, author_quote, image, video, link, hash_id, users_id, type_content_id)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
             $stmt = db_get_prepare_stmt($con, $sql, $post);
 
@@ -119,6 +123,7 @@ var_dump ($post);
             }
         }
     }
+    //var_dump ($post);
 $add_file = "add-" . $post_types[$id - 1]['class_name'] . ".php";
 
 $add_content = include_template($add_file, [
