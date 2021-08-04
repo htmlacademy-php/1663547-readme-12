@@ -6,10 +6,10 @@ require_once('functions.php');
 $is_auth = 1;
 $user_name = 'Леонид';
 $add_form = true;
-$users_id = 4;
-$hash_id = 4;
+$users_id = 3;
+$hash_id = 3;
 
-$id = '1';
+$id = 1;
 $post_types = [];
 $errors = [];
 $post = [];
@@ -102,12 +102,11 @@ if (isset($_GET['id'])) {
             $post = array_filter($post);
 
             $post = fillArray($post, ['heading', 'content', 'author_quote', 'image', 'video', 'link']);
-            $post['hash_id'] = $hash_id;
             $post['users_id'] = $users_id;
+            $post['hash_id'] = $hash_id;
             $post['type_contnet_id'] = $id;
 
-
-            $sql = 'INSERT INTO post (heading, content, author_quote, image, video, link, hash_id, users_id, type_content_id)
+            $sql = 'INSERT INTO post (heading, content, author_quote, image, video, link, users_id, hash_id, type_content_id)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
             $stmt = db_get_prepare_stmt($con, $sql, $post);
@@ -123,7 +122,7 @@ if (isset($_GET['id'])) {
             }
         }
     }
-    //var_dump ($post);
+
 $add_file = "add-" . $post_types[$id - 1]['class_name'] . ".php";
 
 $add_content = include_template($add_file, [
