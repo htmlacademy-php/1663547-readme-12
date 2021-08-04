@@ -115,7 +115,7 @@ if (isset($_GET['id'])) {
             if($result) {
                 $post_id = mysqli_insert_id($con);
 
-                header("Location: post.php?id=" . $post_id);
+                header("Location: post.php?post_id=" . $post_id);
             } else {
                 print("Ошибка запроса: " . mysqli_error($con));
 
