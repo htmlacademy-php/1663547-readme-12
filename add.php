@@ -17,11 +17,12 @@ $post = [];
 $post_types = make_select_query($con, 'SELECT * FROM type_content');
 
 if (isset($_GET['id'])) {
-    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);}
+    $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+}
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $post = $_POST;
-        $required_fields = ['heading', 'text', 'author', 'link', 'video_url', 'tags'];
+        $required_fields = ['heading', 'text', 'author', 'link', 'video_url'];
 
         $rules = [
             'heading' => function ($value) {
@@ -42,9 +43,6 @@ if (isset($_GET['id'])) {
             'video_url' => function ($value) {
                 return validateUrl($value, 'Ссылка Youtube', true);
             },
-            'tags' => function ($value) {
-                return validateFilled($value, 'Теги');
-            }
         ];
 
         foreach ($post as $key => $value) {
@@ -54,8 +52,8 @@ if (isset($_GET['id'])) {
             }
         }
 
-        if ($id === '3') {
-            if (!empty($_FILES['photo']['name'])) {
+        if ($id === '1') {
+            if (!empty($_FILES['photo'])) {
                 $tmp_name = $_FILES['photo']['tmp_name'];
                 $img_name = $_FILES['photo']['name'];
 
@@ -70,9 +68,9 @@ if (isset($_GET['id'])) {
                 $errors['url'] = "Добавьте файл или введите ссылку.";
             } elseif (validateUrl($_POST['url'])) {
                 $file_type = getFileType($_POST['url']);
-                $file = file_get_contents($_POST['url']);
+                $file = validateFileType($file_type);
                 if ($file) {
-                    $valid_type = validateFileType($file_type, $avalable_file_types);
+                    $valid_type = file_get_contents($_POST['url']);
                     if (!$valid_type) {
                         $img_name = pathinfo($_POST['url'], PATHINFO_BASENAME);
                         file_put_contents('uploads/' . $img_name, $file);
@@ -104,7 +102,7 @@ if (isset($_GET['id'])) {
             $post = fillArray($post, ['heading', 'content', 'author_quote', 'image', 'video', 'link']);
             $post['users_id'] = $users_id;
             $post['hash_id'] = $hash_id;
-            $post['type_contnet_id'] = $id;
+            $post['type_content_id'] = $id;
 
             $sql = 'INSERT INTO post (heading, content, author_quote, image, video, link, users_id, hash_id, type_content_id)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';

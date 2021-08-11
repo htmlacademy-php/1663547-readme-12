@@ -166,14 +166,16 @@ function getFileType($file)
 /**
  * Функция проверки соответствия типов файла
  * @param string $file_type тип файла
- * @param array $available_types массив с допустимыми типами файлов
  * @return string возвращает ошибку если тип файла не соответствует допустимым типам, иначе возвращает null
  */
-function validateFileType($file_type, $available_types)
+function validateFileType($file_type)
 {
+    $available_types = ['image/jpeg', 'image/png', 'image/gif'];
+
     if (in_array($file_type, $available_types)) {
         return null;
     }
+
     return "Неверный формат файла. Файл может быть PNG, JPEG или GIF.";
 }
 
