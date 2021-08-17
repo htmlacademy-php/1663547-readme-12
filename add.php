@@ -19,7 +19,7 @@ $post_types = make_select_query($con, 'SELECT * FROM type_content');
 if (isset($_GET['id'])) {
     $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 }
-
+var_dump ($_FILES);
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $post = $_POST;
         $required_fields = ['heading', 'text', 'author', 'link', 'video_url'];
@@ -53,28 +53,31 @@ if (isset($_GET['id'])) {
         }
 
         if ($id === '1') {
-            if (!empty($_FILES['photo'])) {
+            if (!empty($_FILES['photo']['name'])) {
                 $tmp_name = $_FILES['photo']['tmp_name'];
                 $img_name = $_FILES['photo']['name'];
 
                 $finfo = finfo_open(FILEINFO_MIME_TYPE);
                 $file_type = finfo_file($finfo, $tmp_name);
-
-                if(!validateFileType($file_type)) {
-                    move_uploaded_file($tmp_name, 'uploads/' . $img_name);
+                $valid_type = validateFileType($file_type);
+                if(!$valid_type) {
+                    move_uploaded_file($tmp_name, 'img/' . $img_name);
                     $post['image'] = $img_name;
+                } else {
+                $errors['file'] = $valid_type;
                 }
             } elseif (empty($_POST['url'])) {
                 $errors['url'] = "Добавьте файл или введите ссылку.";
             } elseif (validateUrl($_POST['url'])) {
                 $file_type = getFileType($_POST['url']);
                 $file = validateFileType($file_type);
+
                 if ($file) {
                     $valid_type = file_get_contents($_POST['url']);
                     if (!$valid_type) {
                         $img_name = pathinfo($_POST['url'], PATHINFO_BASENAME);
-                        file_put_contents('uploads/' . $img_name, $file);
-                        $post['img'] = $img_name;
+                        file_put_contents('img/' . $img_name, $file);
+                        $post['image'] = $img_name;
                     } else {
                         $errors['file'] = $valid_type;
                     }
@@ -110,6 +113,7 @@ if (isset($_GET['id'])) {
             $stmt = db_get_prepare_stmt($con, $sql, $post);
 
             $result = mysqli_stmt_execute($stmt);
+
             if($result) {
                 $post_id = mysqli_insert_id($con);
 

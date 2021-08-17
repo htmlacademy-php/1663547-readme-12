@@ -120,12 +120,12 @@
                                 <?php break;?>
                             <?php case'photo': ?>
                             <div class="post-photo__image-wrapper">
-                                <img src="<?= $elem['image']?>" alt="Фото от пользователя" width="360" height="240">
+                                <img src="img/<?=$elem['image']?>" alt="Фото от пользователя" width="360" height="240">
                             </div>
                                 <?php break;?>
                             <?php case'link':?>
                             <div class="post-link__wrapper">
-                                <a class="post-link__external" href="<?= $elem['link'] ?>" title="Перейти по ссылке">
+                                <a class="post-link__external" href="<?=$elem['link'] ?>" title="Перейти по ссылке">
                                     <div class="post-link__info-wrapper">
                                         <div class="post-link__icon-wrapper">
                                             <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
@@ -144,8 +144,8 @@
                         ?>
                         <footer class="post__footer">
                             <div class="post__author">
-                                <a class="post__author-link" href="#" title="
-                                <?php
+                                <a class="post__author-link" href="#" title=
+                                "<?php
                                 $randomDate = generate_random_date($key);
                                 $unixRandomDate = strtotime($randomDate);
                                 echo date('d.m.Y H:i:s',$unixRandomDate);

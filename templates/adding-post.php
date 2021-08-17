@@ -9,8 +9,8 @@
                     <ul class="adding-post__tabs-list filters__list tabs__list">
                         <?php foreach ($post_types as $type): ?>
                             <li class="adding-post__tabs-item filters__item">
-                                <a class="adding-post__tabs-link filters__button filters__button--<?= $type['class_name'] ?>
-                    <?php if ($type['id'] === $id): ?> filters__button--active <?php endif; ?> tabs__item tabs__item--active button" href="add.php?<?= http_build_query([ 'id' => $type['id'] ]) ?>">
+                                <a class="adding-post__tabs-link filters__button filters__button--<?php echo $type['class_name'];
+                     if ($type['id'] === $id): ?> tabs__item--active filters__button--active <?php endif; ?> tabs__item button" href="add.php?<?= http_build_query([ 'id' => $type['id'] ]) ?>">
                                     <svg class="filters__icon" width="22" height="18">
                                         <use xlink:href="#icon-filter-<?= $type['class_name'] ?>"></use>
                                     </svg>
@@ -21,35 +21,54 @@
                     </ul>
                 </div>
                 <div class="adding-post__tab-content">
-                    <section class="adding-post__<?=$post_types[$id - 1]['class_name']; ?> tabs__content tabs__content--active">
+                    <section class="adding-post__<?=$post_types[$id - 1]['class_name'] ?> tabs__content tabs__content--active">
                         <h2 class="visually-hidden">Форма добавления</h2>
-                        <form class="adding-post__form form" action="add.php?<?= http_build_query([ 'id' => $id ]) ?>" method="post" enctype="multipart/form-data">
+                        <form class="adding-post__form form"
+                              action="add.php?<?= http_build_query([ 'id' => $id ]) ?>"
+                              method="post"
+                              enctype="multipart/form-data">
                             <div class="form__text-inputs-wrapper">
                                 <div class="form__text-inputs">
-                                    <div class="adding-post__input-wrapper form__input-wrapper <?php if(array_key_exists("heading", $errors)): ?> form__input-section--error <?php endif; ?>">
-                                        <label class="adding-post__label form__label" for="heading">Заголовок <span class="form__input-required">*</span></label>
+                                    <div class="adding-post__input-wrapper form__input-wrapper
+                                    <?php if(array_key_exists("heading", $errors)): ?> form__input-section--error <?php endif; ?>">
+                                        <label class="adding-post__label form__label" for="heading">Заголовок
+                                            <span class="form__input-required">*</span></label>
                                         <div class="form__input-section">
-                                            <input class="adding-post__input form__input" id="heading" type="text" name="heading" value="<?=getPostVal('heading'); ?>" placeholder="Введите заголовок">
-                                            <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
+                                            <input class="adding-post__input form__input"
+                                                   id="heading"
+                                                   type="text"
+                                                   name="heading"
+                                                   value="<?=getPostVal('heading'); ?>"
+                                                   placeholder="Введите заголовок">
+                                            <button class="form__error-button button" type="button">!
+                                                <span class="visually-hidden">Информация об ошибке</span></button>
                                             <div class="form__error-text">
                                                 <h3 class="form__error-title">Ошибка!</h3>
                                                 <p class="form__error-desc"><?=$errors['heading']; ?></p>
                                             </div>
                                         </div>
                                     </div>
+
                                     <?= $content ?>
-                                    <div class="adding-post__input-wrapper form__input-wrapper <?php if(array_key_exists("tags", $errors)): ?> form__input-section--error <?php endif; ?>">
+
+                                    <div class="adding-post__input-wrapper form__input-wrapper
+                                    <?php if(array_key_exists("tags", $errors)): ?> form__input-section--error <?php endif;?>">
                                         <label class="adding-post__label form__label" for="tags">Теги</label>
                                         <div class="form__input-section">
-                                            <input class="adding-post__input form__input" id="tags" type="text" name="tags" value="<?= getPostVal('tags') ?>" placeholder="Введите теги">
-                                            <button class="form__error-button button" type="button">!<span class="visually-hidden">Информация об ошибке</span></button>
+                                            <input class="adding-post__input form__input"
+                                                   id="tags"
+                                                   type="text"
+                                                   name="tags"
+                                                   value="<?= getPostVal('tags') ?>"
+                                                   placeholder="Введите теги">
+                                            <button class="form__error-button button" type="button">!
+                                                <span class="visually-hidden">Информация об ошибке</span></button>
                                             <div class="form__error-text">
                                                 <h3 class="form__error-title">Ошибка!</h3>
                                                 <p class="form__error-desc"><?= $errors['tags'] ?></p>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <?php if (count($errors)): ?>
                                     <div class="form__invalid-block">
