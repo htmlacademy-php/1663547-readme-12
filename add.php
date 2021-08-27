@@ -12,17 +12,18 @@ $hash_id = 3;
 $id = 1;
 $post_types = [];
 $errors = [];
-$post = [];
+$data = [];
 
 $post_types = make_select_query($con, 'SELECT * FROM type_content');
 
 if (isset($_GET['id'])) {
     $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 }
-var_dump ($_FILES);
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $post = $_POST;
-        $required_fields = ['heading', 'text', 'author', 'link', 'video_url'];
+//var_dump ($_FILES);
+//die(0);
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $data = $_POST;
+    $required_fields = ['heading', 'text', 'author', 'link'];
 
         $rules = [
             'heading' => function ($value) {
@@ -39,13 +40,10 @@ var_dump ($_FILES);
             },
             'link' => function ($value) {
                 return validateUrl($value, 'Ссылка');
-            },
-            'video_url' => function ($value) {
-                return validateUrl($value, 'Ссылка Youtube', true);
-            },
+            }
         ];
 
-        foreach ($post as $key => $value) {
+        foreach ($data as $key => $value) {
             if (isset($rules[$key])) {
                 $rule = $rules[$key];
                 $errors[$key] = $rule($value);
@@ -56,28 +54,28 @@ var_dump ($_FILES);
             if (!empty($_FILES['photo']['name'])) {
                 $tmp_name = $_FILES['photo']['tmp_name'];
                 $img_name = $_FILES['photo']['name'];
+                $file_type = $_FILES['photo']['type'];
 
-                $finfo = finfo_open(FILEINFO_MIME_TYPE);
-                $file_type = finfo_file($finfo, $tmp_name);
+
                 $valid_type = validateFileType($file_type);
-                if(!$valid_type) {
-                    move_uploaded_file($tmp_name, 'img/' . $img_name);
-                    $post['image'] = $img_name;
+                if (!$valid_type) {
+                    move_uploaded_file($tmp_name, __DIR__ . '/uploads/' . $img_name);
+                    $data['image'] = $img_name;
                 } else {
                 $errors['file'] = $valid_type;
                 }
-            } elseif (empty($_POST['url'])) {
-                $errors['url'] = "Добавьте файл или введите ссылку.";
-            } elseif (validateUrl($_POST['url'])) {
+            } else {
+                if (empty($_POST['url'])) {
+                    $errors['url'] = "Добавьте файл или введите ссылку.";
+                } elseif (validateUrl($_POST['url'], 'Ссылка')) {
                 $file_type = getFileType($_POST['url']);
                 $file = validateFileType($file_type);
-
-                if ($file) {
+                if ($file_type) {
                     $valid_type = file_get_contents($_POST['url']);
                     if (!$valid_type) {
                         $img_name = pathinfo($_POST['url'], PATHINFO_BASENAME);
-                        file_put_contents('img/' . $img_name, $file);
-                        $post['image'] = $img_name;
+                        file_put_contents(__DIR__ . '/uploads/' . $img_name, $file);
+                        $data['image'] = $img_name;
                     } else {
                         $errors['file'] = $valid_type;
                     }
@@ -88,29 +86,27 @@ var_dump ($_FILES);
         $errors = array_filter($errors);
 
         if (!count($errors)) {
-            if(isset($post['tags'])) {
-                $tags = $post['tags'];
+
+            if (isset($data['text'])) {
+                $data['content'] = $data['text'];
+                $data['text'] = null;
+            }
+            if (isset($data['quote'])) {
+                $data['content'] = $data['quote'];
+                $data['quote'] = null;
             }
 
-            if (isset($post['text'])) {
-                $post['content'] = $post['text'];
-                $post['text'] = null;
-            }
-            if (isset($post['quote'])) {
-                $post['content'] = $post['quote'];
-                $post['quote'] = null;
-            }
-            $post = array_filter($post);
+            $data = array_filter($data);
 
-            $post = fillArray($post, ['heading', 'content', 'author_quote', 'image', 'video', 'link']);
-            $post['users_id'] = $users_id;
-            $post['hash_id'] = $hash_id;
-            $post['type_content_id'] = $id;
+            $data = fillArray($data, ['heading', 'content', 'author_quote', 'image', 'video', 'link']);
+            $data['users_id'] = $users_id;
+            $data['hash_id'] = $hash_id;
+            $data['type_content_id'] = $id;
 
             $sql = 'INSERT INTO post (heading, content, author_quote, image, video, link, users_id, hash_id, type_content_id)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
 
-            $stmt = db_get_prepare_stmt($con, $sql, $post);
+            $stmt = db_get_prepare_stmt($con, $sql, $data);
 
             $result = mysqli_stmt_execute($stmt);
 
@@ -118,13 +114,14 @@ var_dump ($_FILES);
                 $post_id = mysqli_insert_id($con);
 
                 header("Location: post.php?post_id=" . $post_id);
+                die();
             } else {
                 print("Ошибка запроса: " . mysqli_error($con));
 
             }
         }
     }
-
+}
 $add_file = "add-" . $post_types[$id - 1]['class_name'] . ".php";
 
 $add_content = include_template($add_file, [

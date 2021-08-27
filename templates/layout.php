@@ -119,7 +119,7 @@
         </div>
     </div>
 </header>
-<main class="content"><?= $content ?></main>
+<?= $content ?>
 <footer class="footer">
     <div class="footer__wrapper">
         <div class="footer__container container">

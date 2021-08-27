@@ -9,8 +9,8 @@
                     <ul class="adding-post__tabs-list filters__list tabs__list">
                         <?php foreach ($post_types as $type): ?>
                             <li class="adding-post__tabs-item filters__item">
-                                <a class="adding-post__tabs-link filters__button filters__button--<?php echo $type['class_name'];
-                     if ($type['id'] === $id): ?> tabs__item--active filters__button--active <?php endif; ?> tabs__item button" href="add.php?<?= http_build_query([ 'id' => $type['id'] ]) ?>">
+                                <a class="adding-post__tabs-link filters__button filters__button--<?php echo $type['class_name'];?>
+                     <?= ($type['id'] === $id) ? 'tabs__item--active filters__button--active' : ''?> tabs__item button" href="add.php?<?= http_build_query([ 'id' => $type['id'] ]) ?>">
                                     <svg class="filters__icon" width="22" height="18">
                                         <use xlink:href="#icon-filter-<?= $type['class_name'] ?>"></use>
                                     </svg>
@@ -30,7 +30,7 @@
                             <div class="form__text-inputs-wrapper">
                                 <div class="form__text-inputs">
                                     <div class="adding-post__input-wrapper form__input-wrapper
-                                    <?php if(array_key_exists("heading", $errors)): ?> form__input-section--error <?php endif; ?>">
+                                    <?= array_key_exists("heading", $errors) ? 'form__input-section--error' : '' ?>">
                                         <label class="adding-post__label form__label" for="heading">Заголовок
                                             <span class="form__input-required">*</span></label>
                                         <div class="form__input-section">
@@ -52,7 +52,7 @@
                                     <?= $content ?>
 
                                     <div class="adding-post__input-wrapper form__input-wrapper
-                                    <?php if(array_key_exists("tags", $errors)): ?> form__input-section--error <?php endif;?>">
+                                    <?= array_key_exists("tags", $errors) ? 'form__input-section--error' : '' ?>">
                                         <label class="adding-post__label form__label" for="tags">Теги</label>
                                         <div class="form__input-section">
                                             <input class="adding-post__input form__input"

@@ -120,7 +120,7 @@
                                 <?php break;?>
                             <?php case'photo': ?>
                             <div class="post-photo__image-wrapper">
-                                <img src="img/<?=$elem['image']?>" alt="Фото от пользователя" width="360" height="240">
+                                <img src="uploads/<?=$elem['image']?>" alt="Фото от пользователя" width="360" height="240">
                             </div>
                                 <?php break;?>
                             <?php case'link':?>
@@ -151,7 +151,7 @@
                                 echo date('d.m.Y H:i:s',$unixRandomDate);
                                 ?>">
                                     <div class="post__avatar-wrapper">
-                                        <img class="post__author-avatar" src="<?= $elem['avatar_path']?>" alt="Аватар пользователя">
+                                        <img class="post__author-avatar" src="uploads/<?= $elem['avatar_path']?>" alt="Аватар пользователя">
                                     </div>
                                     <div class="post__info">
                                         <b class="post__author-name"><?= $elem['name'] ?></b>
