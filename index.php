@@ -3,7 +3,7 @@
  * @var mysqli $con
  */
 require_once ('helpers.php');
-require_once('functions.php');
+//require_once('functions.php');
 require_once('connection.php');
 
 $is_auth = rand(0, 1);
@@ -14,7 +14,7 @@ $add_form = false;
 $type_content_id = filter_input(INPUT_GET,'type-content',FILTER_VALIDATE_INT);
     if ($result_type = mysqli_query($con, 'SELECT * FROM type_content')){
         $types = mysqli_fetch_all($result_type, MYSQLI_ASSOC);
-        $sql_post = 'SELECT p.id, p.heading, p.content, p.image, p.link, p.author_quote,
+        $sql_post = 'SELECT p.id, p.heading, p.content, p.image, p.link, p.video, p.author_quote,
             p.number_views, u.avatar_path, u.name, t.class_name
             FROM post p
             JOIN users u

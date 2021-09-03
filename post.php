@@ -8,33 +8,33 @@ $title = 'Популярное';
 $add_form = false;
 
 $id = filter_input(INPUT_GET, 'post_id', FILTER_VALIDATE_INT);
-$sql = 'SELECT p.id, p.heading, p.content, p.image, p.link, u.name, u.avatar_path, t.class_name
+$sql = 'SELECT p.id, p.heading, p.content, p.image, p.link, p.video, u.name, u.avatar_path, t.class_name
     FROM post p
     JOIN users u ON p.users_id = u.id
     JOIN type_content t ON p.type_content_id = t.id';
 
 if ($id) {
-        $sql .= ' WHERE p.id = '. $id;
-        $result = mysqli_query($con, $sql);
-        $active_post = mysqli_fetch_array($result, MYSQLI_ASSOC);
+    $sql .= ' WHERE p.id = ' . $id;
+    $result = mysqli_query($con, $sql);
+    $active_post = mysqli_fetch_array($result, MYSQLI_ASSOC);
 }
-    if (!$active_post) {
-        http_response_code(404);
-        exit();
-    }
+if (!$active_post) {
+    http_response_code(404);
+    exit();
+}
 
-$post_content = include_template("post-". $active_post['class_name'] . ".php", ['content' => $active_post]);
+$post_content = include_template("post-" . $active_post['class_name'] . ".php", ['content' => $active_post]);
 $page_content = include_template('one-post.php',
     [
-    'content' => $post_content,
-    'post' => $active_post
+        'content' => $post_content,
+        'post' => $active_post
     ]);
 $layout_content = include_template('layout.php',
     [
-    'content' => $page_content,
-    'title' => $title,
-    'user_name' => $user_name,
-    'is_auth' => $is_auth,
+        'content' => $page_content,
+        'title' => $title,
+        'user_name' => $user_name,
+        'is_auth' => $is_auth,
         'add_form' => $add_form
     ]);
 print($layout_content);
