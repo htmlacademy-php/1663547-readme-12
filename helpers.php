@@ -412,11 +412,6 @@ function validateUrl($value, $title, $video = false)
     return $notEmpty;
 }
 
-function validateUrlVideo()
-{
-
-}
-
 /**
  * Функция возвращает тип файла
  * @param string $file файл у которого проверяется тип
