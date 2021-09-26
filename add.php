@@ -9,15 +9,15 @@ $add_form = true;
 $users_id = 3;
 $hash_id = 3;
 
-$id = 1;
+
 $errors = [];
 $data = [];
 
 $post_types = make_select_query($con, 'SELECT * FROM type_content');
 
-if (isset($_GET['id'])){
-$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-}
+
+$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT) ?? 1;
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = $_POST;
