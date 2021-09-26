@@ -35,6 +35,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'author' => function ($value) {
             return validateFilled($value, 'Автор');
         },
+        'url' => function ($value){
+            return empty($_FILES['photo']) ? validateUrl($value, 'Ссылка image') : null;
+        },
         'link' => function ($value) {
             return validateUrl($value, 'Ссылка');
         },
