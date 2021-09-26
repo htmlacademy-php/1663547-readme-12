@@ -42,11 +42,12 @@
                 <b class="popular__filters-caption filters__caption">Тип контента:</b>
                 <ul class="popular__filters-list  filters__list ">
                     <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all ">
-                        <a class="filters__button filters__button--ellipse filters__button--all filters__button--active" href="index.php">
+                        <a class="filters__button filters__button--ellipse filters__button--all filters__button--active"
+                           href="index.php">
                             <span>Все</span>
                         </a>
                     </li>
-                    <?php foreach ($types as $type_content){
+                    <?php foreach ($types as $type_content) {
                         $size = [];
                         switch ($type_content['class_name']) {
                             case 'photo':
@@ -81,10 +82,11 @@
                                 break;
                         } ?>
                         <li class="popular__filters-item filters__item">
-                            <a class="filters__button filters__button--<?= $type_content['class_name'] ?> <?= $type_content['id'] == $type_content_id ? "filters__button--active ":""?>button"
-                               href="index.php?type-content=<?= $type_content['id']?>">
+                            <a class="filters__button filters__button--<?= $type_content['class_name'] ?> <?= $type_content['id'] == $type_content_id ? "filters__button--active " : "" ?>button"
+                               href="index.php?type-content=<?= $type_content['id'] ?>">
                                 <span class="visually-hidden"><?= $type_content['name'] ?></span>
-                                <svg class="filters__icon" width="<?= $size['width'] ?>" height="<?= $size['height'] ?>">
+                                <svg class="filters__icon" width="<?= $size['width'] ?>"
+                                     height="<?= $size['height'] ?>">
                                     <use xlink:href="#icon-filter-<?= $type_content['class_name'] ?>"></use>
                                 </svg>
                             </a>
@@ -94,40 +96,46 @@
             </div>
         </div>
         <div class="popular__posts">
-            <?php foreach ($posts as $key =>$elem) {?>
+            <?php foreach ($posts as $key => $elem) { ?>
                 <article class="popular__post post post-<?= $elem['class_name'] ?>">
                     <header class="post__header">
-                        <h2><a href="post.php?post_id=<?= $elem['id']?>"><?=$elem['heading']?></a></h2>
+                        <h2><a href="post.php?post_id=<?= $elem['id'] ?>"><?= $elem['heading'] ?></a></h2>
                     </header>
                     <div class="post__main">
+                        <!--содержимое для поста-цитаты-->
                         <?php
-                        switch ($elem['class_name']){
+                        switch ($elem['class_name']) {
                             case 'quote':
                                 ?>
                                 <blockquote>
                                     <p>
-                                        <?= $elem['content']?>
+                                        <?= $elem['content'] ?>
                                     </p>
                                     <cite>Неизвестный Автор</cite>
                                 </blockquote>
-                                <?php break;?>
-                            <?php case'text':?>
-                                <?php
-                                $long_text = $elem['content'];
-                                $short_text = cropText($long_text, 270);
-                                echo $short_text;?>
-                                <?php break;?>
-                            <?php case'photo': ?>
+                                <?php break; ?>
+                                <!--содержимое для поста-текста-->
+                            <?php case'text': ?>
+                            <?php
+                            $long_text = $elem['content'];
+                            $short_text = cropText($long_text, 270);
+                            echo $short_text; ?>
+                            <?php break; ?>
+                            <!--содержимое для поста-фото-->
+                        <?php case'photo': ?>
                             <div class="post-photo__image-wrapper">
-                                <img src="<?= $elem['image']?>" alt="Фото от пользователя" width="360" height="240">
+                                <img src="uploads/<?= $elem['image'] ?>" alt="Фото от пользователя" width="360"
+                                     height="240">
                             </div>
-                                <?php break;?>
-                            <?php case'link':?>
+                            <?php break; ?>
+                            <!--содержимое для поста-ссылки-->
+                        <?php case'link': ?>
                             <div class="post-link__wrapper">
                                 <a class="post-link__external" href="<?= $elem['link'] ?>" title="Перейти по ссылке">
                                     <div class="post-link__info-wrapper">
                                         <div class="post-link__icon-wrapper">
-                                            <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
+                                            <img src="https://www.google.com/s2/favicons?domain=vitadental.ru"
+                                                 alt="Иконка">
                                         </div>
                                         <div class="post-link__info">
                                             <h3><?= $elem['heading'] ?></h3>
@@ -136,21 +144,37 @@
                                     <span><?= $elem['link'] ?></span>
                                 </a>
                             </div>
-                                <?php break;
+                            <?php break; ?>
+                            <!--содержимое для поста-видео-->
+                        <?php case 'video': ?>
+                            <div class="post-video__block">
+                                <div class="post-video__preview">
+                                    <?= embed_youtube_cover($elem['video']); ?>
+                                    <img src="" alt="Превью к видео" width="360" height="188">
+                                </div>
+                                <a href="post-details.html" class="post-video__play-big button">
+                                    <svg class="post-video__play-big-icon" width="14" height="14">
+                                        <use xlink:href="#icon-video-play-big"></use>
+                                    </svg>
+                                    <span class="visually-hidden">Запустить проигрыватель</span>
+                                </a>
+                            </div>
+                            <?php break;
                             default:
                                 break;
                         }
                         ?>
                         <footer class="post__footer">
                             <div class="post__author">
-                                <a class="post__author-link" href="#" title="
-                                <?php
+                                <a class="post__author-link" href="#" title=
+                                "<?php
                                 $randomDate = generate_random_date($key);
                                 $unixRandomDate = strtotime($randomDate);
-                                echo date('d.m.Y H:i:s',$unixRandomDate);
+                                echo date('d.m.Y H:i:s', $unixRandomDate);
                                 ?>">
                                     <div class="post__avatar-wrapper">
-                                        <img class="post__author-avatar" src="<?= $elem['avatar_path']?>" alt="Аватар пользователя">
+                                        <img class="post__author-avatar" src="uploads/<?= $elem['avatar_path'] ?>"
+                                             alt="Аватар пользователя">
                                     </div>
                                     <div class="post__info">
                                         <b class="post__author-name"><?= $elem['name'] ?></b>
@@ -158,7 +182,7 @@
                                             <?php
                                             date_default_timezone_set('Europe/Moscow');
                                             $general = time() - $unixRandomDate;
-                                            echo get_time_ago($general).' '.'назад';
+                                            echo get_time_ago($general) . ' ' . 'назад';
                                             ?></time>
                                     </div>
                                 </a>
@@ -176,7 +200,8 @@
                                         <span>0</span>
                                         <span class="visually-hidden">количество лайков</span>
                                     </a>
-                                    <a class="post__indicator post__indicator--comments button" href="#" title="Комментарии">
+                                    <a class="post__indicator post__indicator--comments button" href="#"
+                                       title="Комментарии">
                                         <svg class="post__indicator-icon" width="19" height="17">
                                             <use xlink:href="#icon-comment"></use>
                                         </svg>
@@ -187,6 +212,6 @@
                             </div>
                         </footer>
                 </article>
-            <?php }?>
+            <?php } ?>
         </div>
 </section>

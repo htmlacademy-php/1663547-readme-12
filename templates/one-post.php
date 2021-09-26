@@ -115,7 +115,7 @@
                     <div class="post-details__user-info user__info">
                         <div class="post-details__avatar user__avatar">
                             <a class="post-details__avatar-link user__avatar-link" href="#">
-                                <img class="post-details__picture user__picture" src="<?= $post['avatar_path'] ?>" alt="Аватар пользователя">
+                                <img class="post-details__picture user__picture" src="uploads/<?= $post['avatar_path'] ?>" alt="Аватар пользователя">
                             </a>
                         </div>
                         <div class="post-details__name-wrapper user__name-wrapper">
@@ -144,4 +144,3 @@
         </section>
     </div>
 </main>
-<script src="js/main.js"></script>
