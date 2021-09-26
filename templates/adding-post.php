@@ -12,7 +12,7 @@
                             <li class="adding-post__tabs-item filters__item">
                                 <a class="adding-post__tabs-link filters__button filters__button--<?php
                                 echo $type['class_name']; ?>
-                     <?= ($type['id'] === $id) ? 'tabs__item--active filters__button--active' : '' ?> tabs__item button"
+                     <?= ($type['id'] == $id) ? 'tabs__item--active filters__button--active' : '' ?> tabs__item button"
                                    href="add.php?<?= http_build_query(['id' => $type['id']]) ?>">
                                     <svg class="filters__icon" width="22" height="18">
                                         <use xlink:href="#icon-filter-<?= $type['class_name'] ?>"></use>

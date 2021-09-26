@@ -3,8 +3,6 @@
 require_once('helpers.php');
 require_once('connection.php');
 
-
-
 $is_auth = 1;
 $user_name = 'Леонид';
 $add_form = true;
@@ -17,14 +15,13 @@ $data = [];
 
 $post_types = make_select_query($con, 'SELECT * FROM type_content');
 
-
+if (isset($_GET['id'])){
 $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = $_POST;
     $required_fields = ['heading', 'text', 'author', 'link', 'video'];
-
     $rules = [
         'heading' => function ($value) {
             return validateFilled($value, 'Заголовок');
@@ -40,9 +37,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         },
         'link' => function ($value) {
             return validateUrl($value, 'Ссылка');
-        },
-        'url' => function ($value) {
-            return validateUrl($value, 'Ссылка image');
         },
         'video' => function ($value) {
             return validateUrl($value, 'Ссылка Youtube', true);
@@ -124,9 +118,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         }
     }
-
 }
-$add_file = "add-" . $post_types[$id - 1]['class_name'] . ".php";
+$add_file = "add-" . $post_types[$id - 1 ]['class_name'] . ".php";
 
 $add_content = include_template($add_file, [
     'errors' => $errors
