@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $errors['file'] = $valid_type;
             }
         } elseif (!empty($_POST['url'])) {
-            $file_type = getFileType($_POST['url']);
+            $file_type = 'image/' . pathinfo($_POST['url'], PATHINFO_EXTENSION);
             $file = file_get_contents($_POST['url']);
             if ($file_type) {
                 $valid_type = validateFileType($file_type);
